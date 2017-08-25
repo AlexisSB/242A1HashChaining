@@ -55,7 +55,7 @@ rbt.h
 
  -Code must compile using the command
  gcc -O2 -W -Wall -ansi -pedantic -lm *.c -o asgn
- - put this in the make file to check.
+ - put this in the make file to check. Done AB + in Travis CI
 
 Style checks
 - No line more than 80 characters
