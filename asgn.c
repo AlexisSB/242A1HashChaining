@@ -1,29 +1,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MALLOC_DEBUG
 #include "mylib.h"
 #include "container.h"
 #include "flexarray.h"
 #include "htable.h"
-/*#define MALLOC_DEBUG*/
-
 #include "rbt.h"
-/*#define MALLOC_DEBUG*/
 
+#define DEFAULT_SIZE 3877
 
-int main(void){
+int main(int argc, char **argv) {
+  FILE *infile;
   htable h;
-  char *p = emalloc((sizeof (char)) *10);
-  printf("Hello World!\n");
-  p[1] = 'H';
-  h = htable_new(100);
-  htable_insert(h,"hello");
-  htable_insert(h,"world");
-  htable_print(h,stdout);
-  htable_free(h);
-  free(p);
-  return EXIT_SUCCESS;
+  char word[256];
+
+  if (argc > 1){
+    if (NULL ==(infile = fopen(argv[1],"r"))){
+      fprintf(stderr,"%s: can't find file %s\n", argv[0],argv[1]);
+	return EXIT_FAILURE;
+    }
+
+    h = htable_new(DEFAULT_SIZE);
+    /*Fill hash table up with words from file*/
+    while (getword(word, sizeof word, infile)!= EOF){
+      htable_insert(h,word);
+    }
+
+    /* Take words in from stdin*/
+    while ((getword(word,sizeof word, stdin)!=EOF)){
+      if (!(htable_search(h,word))){
+	printf("%s\n",word);
+      }
+    }
+    /*htable_print(h,stdout);*/
+    htable_free(h);
+
+    fclose(infile);
+  
+    return EXIT_SUCCESS;
+  }else{
+    printf("Wrong number of arguments, please include in file");
+    return EXIT_FAILURE;
+  }
   
 }
         

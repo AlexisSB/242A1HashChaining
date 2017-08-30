@@ -57,7 +57,7 @@ int htable_insert(htable h, char *str){
     }
 
     if (h->keys[hashvalue] == NULL) {	/*If new space found */
-	h->keys[hashvalue] = emalloc(strlen(str + 1) * sizeof str[0]);
+      h->keys[hashvalue] = emalloc((strlen(str) + 1) * (sizeof str[0]));
 	strcpy(h->keys[hashvalue], str);
 	h->frequencies[hashvalue] = 1;
 	h->num_keys++;

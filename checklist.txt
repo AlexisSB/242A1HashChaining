@@ -3,7 +3,7 @@
  - Convert flexarray to work with strings
  - add search funciton to flexarray called is_present()
  - add visit() function to flexarray
-       - visit takes a function as a parameter and prints each itme in the flexarray similar to RBT preorder function
+       - visit takes a function as a parxameter and prints each itme in the flexarray similar to RBT preorder function
  - Figure out what visit is supposed to do.
 
  - Check that getword and emalloc in the mylib.c file and mylib.h header
