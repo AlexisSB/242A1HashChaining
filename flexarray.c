@@ -34,7 +34,7 @@ void flexarray_print(flexarray f) {
         printf("%d\n",f->items[i]);
     }
 }
-
+/* Are we doing any sorting for assignment?*/
 void flexarray_sort(flexarray f) {
     /*For quick sort*/
     quick_sort(f->items,f->itemcount);
