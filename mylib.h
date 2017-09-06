@@ -3,7 +3,7 @@
 #include <stddef.h>
 
 /*Comment out to remove malloc debugging info*/
-#define MALLOC_DEBUG
+/*#define MALLOC_DEBUG*/
 
 #ifdef MALLOC_DEBUG
 #define emalloc(size) do_debug_emalloc(__LINE__,__FILE__,size)
