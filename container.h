@@ -6,6 +6,8 @@
 typedef enum container_e {FLEX_ARRAY, RED_BLACK_TREE} container_t;
 typedef struct containerrec *container;
 
-extern void container_new(container c);
+extern container container_new(container_t container_type);
+extern void container_free(container c);
+extern void container_add(container c, char* word);
 
 #endif
