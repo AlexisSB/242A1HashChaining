@@ -17,3 +17,11 @@ void container_add(container c, char *word) {
     }
  
 }
+
+void container_free(container c){
+   if (c->type = RED_BLACK_TREE) {
+     rbt_free(c);
+    }else{
+     flexarray_free(c);
+    }
+}
