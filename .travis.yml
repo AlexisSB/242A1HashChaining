@@ -1,7 +1,0 @@
-language: C
-before_install:
- - sudo apt-get install valgrind
- 
-script:
- - make asgn
- - valgrind ./asgn The-Gift-of-the-Magi.txt < test10words.txt

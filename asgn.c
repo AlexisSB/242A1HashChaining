@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*#include <unistd.h>*/
+
 #include <getopt.h>
 #include "mylib.h"
 #include "container.h"
@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
           case 'r':
               /*use red-black tree as container*/
               printf("Option : %c\n",option);
+              
               break;
           case 's' :
               /*optarg is the table size*/

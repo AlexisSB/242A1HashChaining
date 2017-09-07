@@ -3,13 +3,16 @@
 #include <string.h>
 #include "mylib.h"
 #include "htable.h"
+#include "container.h"
+
+#define DEFAULT_TYPE FLEX_ARRAY
 
 
 struct htablerec {
-  int capacity;
-  int num_keys;
-  int *frequencies;
-  char **keys;
+    int capacity;
+    int num_keys;
+    int *frequencies;
+    container_t *keys;
 };
 
 static unsigned int htable_word_to_int(char *word){
@@ -42,11 +45,17 @@ int htable_insert(htable h, char *str){
     unsigned int hashvalue;
     int counter;
     int HASH_TABLE_FULL = 0;
+    /*char *temp;*/
 
     wordnumber = htable_word_to_int(str);
     hashvalue = wordnumber % (h->capacity);
     counter = 0;
-
+    /*
+    if(h->keys[hashvalue] != NULL){
+        if(h->keys[hashvalue] =
+           container_add
+    }
+    */
     /*Increments through hash table until finds empty space, finds equal value in table or
      * goes through whole table*/
     while (h->keys[hashvalue] != NULL
@@ -75,19 +84,18 @@ int htable_insert(htable h, char *str){
 
 
 
-htable htable_new(int capacity){
-  htable result = emalloc(sizeof *result);
-  int i;
-  result->capacity = capacity;
-  result->num_keys = 0;
-  result->frequencies =
-    emalloc(result->capacity * sizeof result->frequencies[0]);
-  result->keys = emalloc(result->capacity * sizeof result->keys[0]);
-  for (i = 0; i < result->capacity; i++) {
-    result->frequencies[i] = 0;
-    result->keys[i] = NULL;
-  }
-  return result;
+htable htable_new(int capacity, container c){
+    htable result = emalloc(sizeof *result);
+    int i;
+    result->capacity = capacity;
+    result->num_keys = 0;
+    result->frequencies = emalloc(result->capacity * sizeof result->frequencies[0]);
+    result->keys = emalloc(result->capacity * sizeof result->keys[0]);
+    for (i = 0; i < result->capacity; i++) {
+        result->frequencies[i] = 0;
+        result->keys[i] = NULL;
+    }
+    return result;
 }
 
 void htable_print(htable h, FILE * stream){
