@@ -1,371 +1,225 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "rbt.h"
 #include "mylib.h"
+#include "rbt.h"
+
+typedef enum { RED, BLACK } rbt_colour;
+
+struct rbtnode {
+    char* key;
+    rbt_colour colour;
+    rbt left, right;
+};
 
 #define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
 #define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
 
-typedef enum {RED, BLACK} rbt_colour;
-
-struct rbt_node { 
-  char *key;
-  rbt left;
-  rbt right;
-  rbt_colour colour;
-  
-};
-
-int rbt_search(rbt b, char *key) {
-  int comparision;
-  int KEY_FOUND =1;
-  int KEY_NOT_IN_TREE =0;
-
-  if (b == NULL || NULL==b->key){
-    /*printf("Null Tree\n");*/
-    return KEY_NOT_IN_TREE;
-  }
-  
-  comparision = strcmp(key, b->key);
-  
-  if (comparision ==0){
-    /*    printf("Key found at root\n");*/
-    return KEY_FOUND;
-    
-  }else if (comparision > 0){/*target  greater than b->key*/
-    return  rbt_search(b->right, key);
-   
-  }else{/*target less than key*/
-    return rbt_search(b->left,key);
-  }
-
-}
-
-rbt rbt_fix(rbt b){
-  /*if root is black
-   * - check down to grandchildren for pairs:
-   * - look left and fix.
-   * - look right and fix
-   * If root is red
-   * - can only be red if newly inserted.
-   * - shouldnt' need to do anything?
-   * - check colour of children and fix if any red.
-   * Will have to check all the things are not null.
-   */
-  rbt left_child = b->left;
-  rbt right_child = b->right;
-
-  /*Null empty tree condition*/
-  if (left_child == NULL || right_child ==NULL){
-    return b;
-  }
-  
-  if (IS_BLACK(b)){
-
-    /*If children black then apply rbt fix to each grandchild*/
-    if (IS_BLACK(left_child) || IS_BLACK(right_child)){
-      b = rbt_fix(b->left->left);
-      b = rbt_fix(b->left->right);
-      /*Fix here*/
-      b = rbt_fix(b->right->left);
-      b = rbt_fix(b->right->right);
-      return b;
-      
-    }else{
-
-     
-      if (IS_RED(left_child) && IS_RED(left_child->left)){
-	/* red left child, red left left child */
-
-	if (IS_RED(right_child)){/* right child red option to fix tree*/
-	  b->colour = RED;
-	  b->left = BLACK;
-	  b->right = BLACK;
-	  return b;
-	  
-	}else{
-	 
-	  b->colour = RED;
-	  b->left->colour = BLACK;
-	  b = right_rotate(b);
-	  return b;
-	}
-	  
-      }else if (IS_RED(left_child) && IS_RED(left_child->right)){
-	/* red left child, red left right child*/
-	if (IS_RED(right_child)){/* right child red option to fix tree*/
-	  b->colour = RED;
-	  b->left = BLACK;
-	  b->right = BLACK;
-	  return b;
-	  
-	}else{
-	  b->left->right = BLACK;
-	  b->colour = RED;
-	  b->left = left_rotate(b->left);
-	  b = right_rotate(b);
-	  return b;
-	}
-		
-      }else if (IS_RED(right_child) && IS_RED(right_child->left)){
-	/*red right child, red left right child*/
-
-	
-      }else if (IS_RED(right_child) && IS_RED(right_child->right)){
-	/* red right child, red right right child*/
-	
-      }
-      
-      
-      
-      if(IS_RED(left_child)){/*Red left child, check left grandchildren*/
-	
-	if(IS_RED(left_child->left)){
-	  /*Red left child, red left grandchild*/
-
-	  if(IS_RED(right_child)){/*Check right child to determine what to do*/
-	    /*Action - recolour*/
-	    b->colour = RED;
-	    left_child->colour = BLACK;
-	    right_child->colour = BLACK;
-	    return b;
-	    
-	  }else{
-	    /*Action right rotate root and recolour*/
-	    b->colour =RED;
-	    left_child->colour = BLACK;
-	    b = right_rotate(b);
-	    return b;
-	  }
-	}else{
-	  /* If left child red, left left grandchild black
-	   * shouldn't be any rbt conflict*/
-	}else if(left_child->right->colour ==RED){
-	  /* Left
-	  /*Do table thing recolour and rotate.*/
-	}
-	
-      }
-      if(right_child->colour == RED){
-      }
-    } 
-  }else{
-  }
-
-}
-
-/* must use assign when using rbt_insert
- * e.g. b = rbt_insert(b,newstr)
- */
-rbt rbt_insert(rbt b, char *str){
-  int comparision;
-  
-  /*empty tree*/
-  /*printf("Starting insert\n");*/
-  if (b->key ==NULL){
-    /*printf("starting alloc\n");*/
-    b->key = emalloc((strlen(str)+1)*sizeof str[0]);
-    strcpy(b->key,str);
-    /*IS this the only place colour set and fix needed?*/
-    b->colour = RED;
-    rbt_fix(b);
-    return b;
-  }
-  /*key equal to root*/
-  comparision = strcmp(str, b->key);
-
-  if (comparision ==0){
-    printf("Key equal to root");
-    return b;
-  }else if(comparision >0){ /*key greater than root*/
-    /* Not sure if this neccessary??*/
-    if (b->right ==NULL){
-      b->right = rbt_new();
+rbt assign_string(rbt b, char* str) {
+    if (b == NULL) {
+        b = rbt_new();
     }
-    b->right = rbt_insert(b->right,str);
-    rbt_fix(b);
+    b->key = emalloc((strlen(str) + 1) * sizeof(char));
+    strcpy(b->key, str);
     return b;
-  }else{  /*key less than root*/
-    if(b->left ==NULL){
-      b->left = rbt_new();
+}
+
+rbt rbt_new() {
+    rbt result = emalloc(sizeof *result);
+    result->colour = RED;
+    return result;
+}
+
+void rbt_preorder_print_colours(rbt b) {
+    if (b == NULL) return;
+    if (IS_RED(b)) printf("Red: %s\n", b->key);
+    else printf("Black: %s\n", b->key);
+    rbt_preorder_print_colours(b->left);
+    rbt_preorder_print_colours(b->right);
+}
+
+void rbt_preorder(rbt b, void function(char* str)) {
+    if (b == NULL || strcmp(b->key, "") == 0) return;
+    function(b->key);
+    rbt_preorder(b->left, function);
+    rbt_preorder(b->right, function);
+}
+
+void rbt_inorder(rbt b, void function(char* str)) {
+    if (b == NULL || strcmp(b->key, "") == 0) {
+        return;
     }
-    b->left = rbt_insert(b->left,str);
-    rbt_fix(b);
+    rbt_inorder(b->left, function);
+    function(b->key);
+    rbt_inorder(b->right, function);
+}
+
+int rbt_search(rbt b, char* str) {
+    int compare;
+    if (b == NULL || strcmp(b->key, "") == 0) {
+        return 0;
+    }
+    compare = strcmp(b->key, str);
+    if (compare == 0) {
+        return 1;
+    } else if (compare > 0) {
+        return rbt_search(b->left, str);
+    } else {
+        return rbt_search(b->right, str);
+    }
+}
+
+rbt rbt_free(rbt b) {
+    if (b == NULL) {
+        return NULL;
+    }
+    if (strcmp(b->key, "") == 0) printf("EMPTY\n");
+    rbt_free(b->left);
+    rbt_free(b->right);
+    if (b->key != NULL) {
+        free(b->key);
+    }
+    free(b);
+    return NULL;
+}
+
+rbt rbt_delete(rbt b, char* str) {
+    int compare;
+    rbt other = NULL;
+    if (b == NULL || b->key == NULL) {
+        return b;
+    }
+    printf("Deleting %s\n", str);
+    compare = strcmp(b->key, str);
+    if (compare == 0) {
+        if (b->left == NULL && b->right == NULL) {
+            /* no children */
+            return rbt_free(b);;
+        } else if (b->right == NULL) {
+            /* left child only */
+            other = assign_string(other, b->left->key);
+            b = rbt_free(b);
+            return other;
+        } else if (b->left == NULL) {
+            /* right child only */
+            other = assign_string(other, b->right->key);
+            b = rbt_free(b);
+            return other;
+        } else {
+            /* two children */
+            other = b->right;
+            while (other->left != NULL) {
+                other = other->left;
+            }
+            strcpy(b->key, other->key);
+            if (other->right != NULL) {
+                strcpy(other->key, other->right->key);
+                other->right = rbt_free(other->right);
+            } else {
+                other = NULL;
+            }
+            return b;
+        }
+    } else if (compare > 0) {
+        b->left = rbt_delete(b->left, str);
+    } else {
+        b->right = rbt_delete(b->right, str);
+    }
     return b;
-  }
 }
 
-void print_key(char *s) {
-  printf("%s\n", s);
-}
-
-void rbt_inorder(rbt b, void f(char *str)){
-  /*printf("In inorder\n");*/
-  if(b==NULL ||b->key ==NULL){
-    /*printf("Empty Tree");*/
-    return;
-  }
-  /*printf("Past empty tree\n");*/
-  rbt_inorder(b->left,f);
-  /*printf("At root\n");*/
-  f(b->key);
-  /*
-  if(IS_BLACK(b)){
-      printf("BLACK\n");
-    }else{
-      printf("RED\n");
-    }
-  */
-  rbt_inorder(b->right, f);
-}  
-
-void rbt_preorder(rbt b, void f(char *str)){
-  if(b==NULL ||b->key ==NULL){
-    return;
-  }
-  f(b->key);
-  rbt_preorder(b->left,f);
-  rbt_preorder(b->right,f);
-}
-
-void rbt_postorder(rbt b, void f(char *str)){
-  if(b==NULL ||b->key ==NULL){
-    return;
-  }
-  
-  rbt_postorder(b->left,f);
-  rbt_postorder(b->right,f);
-  f(b->key);
-}
-
-rbt rbt_new(){
-  /*allocate memory*/
-  /*create new*/
-  rbt b = emalloc(sizeof *b);
-  
-  b->key = NULL;
-  b->left = NULL;
-  b->right = NULL;
-   
-  return b;
-}
-
-rbt rbt_delete(rbt b, char *str){
-  int comparision;
-  rbt temp;
-  char *temp_string;
-  if (b ==NULL || b->key == NULL){
-    /*printf("Tree empty");*/
-    return b;
-  }
-
-  comparision = strcmp(str,b->key);
-    /*printf("%d\n", comparision);*/
-
-  if (comparision ==0){/*Desired key a current node*/
-    /*delete node*/
-    if(b->left ==NULL && b->right == NULL){/*node is a leaf*/
-      free(b->key);
-      free(b);
-      return NULL;
-    }else if(b->left != NULL && b->right != NULL){/* Two children*/
-      /*printf("Entering two child delete routine\n");*/
-
-      /*Finds the left most child of right child*/
-      temp = b->right;
-      while (temp->left != NULL){
-	temp = temp->left;
-      }
-      
-      /*printf("found leftmost child of right tree\n");*/
-      /*printf("%s, tempkey\n",temp->key);*/
-      /*
-	if (temp->right ==NULL){
-	strcpy(b->key,temp->key);
-	b = rbt_delete(b,temp->key);
-	free(temp->key);
-	free(temp);
-	return b;
-	}else{
-      */
-	    
-      /*must use temp key so not deleting two values;*/
-      temp_string = emalloc((strlen(temp->key)+1)*sizeof temp_string[0]);
-
-      strcpy(temp_string,temp->key);
-      /*printf("%s, temp_string\n", temp_string);*/
-      b = rbt_delete(b,temp->key);
-      free(b->key);
-      b->key = emalloc((strlen(temp_string)+1)*sizeof temp_string[0]);
-      strcpy(b->key,temp_string);
-      free(temp_string);
-      return b;
-
-      /*if last left a leaf node do a simple swap*/
-      /*copy the key.*/
-      /* if it has a right child
-       * copy the value of the key
-       * delete the node calling by key name*/ 
-      
-	
-    }else if(b->left != NULL && b->right == NULL){/*left child only*/
-      temp = b->left;
-      free(b->key);
-      free(b);
-      return temp;
-    }else {
-      /*if (b->left ==NULL && b->right != NULL){*//*right child only*/
-      temp = b->right;
-      free(b->key);
-      free(b);
-      return temp;
-    }
-      
-  }else if (comparision >0){
-    if (b->right ==NULL){
-      return b;
-    }else{
-      b->right = rbt_delete(b->right,str);
-      return b;
-    }
-  }else{
-    if (b->left ==NULL){
-      return b;
-    }else{
-      b->left= rbt_delete(b->left,str);
-      return b;
-    }
-  }
-}
-
-rbt rbt_free(rbt b){
-  while (b != NULL){
-    b = rbt_delete(b,b->key);
-  }
-  return b;
-}
-
-rbt right_rotate(rbt r){
-  rbt temp;
-  if (r ==NULL||r->left==NULL){
+rbt left_rotate(rbt r) {
+    rbt temp = r;
+    r = r->right;
+    temp->right = r->left;
+    r->left = temp;
     return r;
-  }
-  temp = r;
-  r = temp->left;
-  temp->left = r->right;
-  r->right = temp;
-  return r;
 }
 
-rbt left_rotate(rbt r){
-  rbt temp;
-  if(r==NULL|| r->right==NULL){
+rbt right_rotate(rbt r) {
+    rbt temp = r;
+    r = r->left;
+    temp->left = r->right;
+    r->right = temp;
     return r;
-  }
-  temp = r;
-  r = temp->right;
-  temp->right = r->left;
-  r->left=temp;
-  return r;
+}
+
+rbt rbt_fix(rbt r) {
+    if (r->left != NULL && IS_RED(r->left)) {
+        if (IS_RED(r->left->left)) {
+            if (IS_RED(r->right)) {
+                /*make R red, make R's children black*/
+                r->colour = RED;
+                r->left->colour = BLACK;
+                r->right->colour = BLACK;
+            } else {
+                /*right rotate R, make new root black, make R red*/
+                r = right_rotate(r);
+                r->colour = BLACK;
+                r->right->colour = RED;
+            }
+        } else if (IS_RED(r->left->right)) {
+            if (IS_RED(r->right)) {
+                /*make R red, make R's children black*/
+                r->colour = RED;
+                r->left->colour = BLACK;
+                r->right->colour = BLACK;
+            } else {
+                /*left rotate left child of R, right rotate R
+                //make new root black, make R red*/
+                r->left = left_rotate(r->left);
+                r = right_rotate(r);
+                r->colour = BLACK;
+                r->right->colour = RED;
+            }
+        }
+    }
+    if (r->right != NULL && IS_RED(r->right)) {
+        if (IS_RED(r->right->left)) {
+            if (IS_RED(r->left)) {
+                /*make R red, make R's children black*/
+                r->colour = RED;
+                r->left->colour = BLACK;
+                r->right->colour = BLACK;
+            } else {
+                /*right rotate right child of R, left rotate R
+                //make new root black, make R red*/
+                r->right = right_rotate(r->right);
+                r = left_rotate(r);
+                r->colour = BLACK;
+                r->left->colour = RED;
+            }
+        } else if (IS_RED(r->right->right)) {
+            if (IS_RED(r->left)) {
+                /*make R red, make R's children black*/
+                r->colour = RED;
+                r->left->colour = BLACK;
+                r->right->colour = BLACK;
+            } else {
+                /*left rotate R, make new root black, make R red*/
+                r = left_rotate(r);
+                r->colour = BLACK;
+                r->left->colour = RED;
+            }
+        }
+    }
+    return r;
+}
+
+rbt rbt_insert(rbt b, char* str) {
+    int compare;
+    if (b == NULL || b->key == NULL) {
+        b = assign_string(b, str);
+    } else {
+        compare = strcmp(b->key, str);
+        if (compare == 0) {
+            b = assign_string(b, str);
+        } else if (compare > 0) {
+            b->left = rbt_insert(b->left, str);
+        } else {
+            b->right = rbt_insert(b->right, str);
+        }
+    }
+    b = rbt_fix(b);
+    return b;
 }
