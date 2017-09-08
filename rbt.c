@@ -4,16 +4,23 @@
 #include "mylib.h"
 #include "rbt.h"
 
+#define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
+#define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
+
 typedef enum { RED, BLACK } rbt_colour;
 
 struct rbtnode {
     char* key;
     rbt_colour colour;
-    rbt left, right;
+    rbt left;
+    rbt right;
 };
 
-#define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
-#define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
+rbt rbt_new() {
+    rbt result = emalloc(sizeof *result);
+    result->colour = RED;
+    return result;
+}
 
 rbt assign_string(rbt b, char* str) {
     if (b == NULL) {
@@ -22,12 +29,6 @@ rbt assign_string(rbt b, char* str) {
     b->key = emalloc((strlen(str) + 1) * sizeof(char));
     strcpy(b->key, str);
     return b;
-}
-
-rbt rbt_new() {
-    rbt result = emalloc(sizeof *result);
-    result->colour = RED;
-    return result;
 }
 
 void rbt_preorder_print_colours(rbt b) {
@@ -58,14 +59,15 @@ int rbt_search(rbt b, char* str) {
     int compare;
     if (b == NULL || strcmp(b->key, "") == 0) {
         return 0;
-    }
-    compare = strcmp(b->key, str);
-    if (compare == 0) {
+    }else{
+      compare = strcmp(b->key, str);
+      if (compare == 0) {
         return 1;
-    } else if (compare > 0) {
+      } else if (compare > 0) {
         return rbt_search(b->left, str);
-    } else {
+      } else {
         return rbt_search(b->right, str);
+      }
     }
 }
 

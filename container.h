@@ -8,7 +8,7 @@ typedef struct containerrec *container;
 
 extern container container_new();
 extern void container_free(container c);
-extern void container_add(container c, char* str);
+extern int  container_add(container c, char* str);
 extern int container_search(container c, char* str);
 extern void container_print(container c, FILE *stream);
 

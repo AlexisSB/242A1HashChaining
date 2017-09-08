@@ -36,6 +36,7 @@ htable htable_new(int capacity, container_t c){
     return result;
 }
 
+
 void htable_free(htable h){
     int i;
     for (i=0;i<h->capacity;i++){
@@ -56,13 +57,11 @@ static unsigned int htable_word_to_int(char *word){
 int htable_insert(htable h, char *str){
     unsigned int wordnumber;
     unsigned int hashvalue;
-    int counter;
     int result;
 
     wordnumber = htable_word_to_int(str);
     hashvalue = wordnumber % (h->capacity);
-    counter = 0;
-
+    
     result = container_add(h->keys[hashvalue],str);
     
     return result;
@@ -74,11 +73,20 @@ void htable_print(htable h , FILE *stream){
     for (i =0; i<h->capacity;i++){
 	container_print(h->keys[i],stream);
     }
-    
+}
 
+int htable_search(htable h, char *str){
+  unsigned int wordnumber;
+  unsigned int hashvalue;
+  int result;
+
+  wordnumber = htable_word_to_int(str);
+  hashvalue = wordnumber % (h->capacity);
+
+  result = container_search(h->keys[hashvalue],str);
+
+  return result;
 
 }
 
-int htable_search(){
-}
     

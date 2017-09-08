@@ -9,12 +9,14 @@
 #include "rbt.h"
 
 #define DEFAULT_SIZE 3877
+#define DEFAULT_TYPE FLEX_ARRAY
 
 int main(int argc, char **argv) {
   FILE *infile;
   htable h;
   char word[256];
   int h_table_size = DEFAULT_SIZE;
+  container_t container_type = DEFAULT_TYPE;
 
   const char *optstring = "rs:pih";
   char option;
@@ -73,7 +75,7 @@ int main(int argc, char **argv) {
 	return EXIT_FAILURE;
     }
 
-    h = htable_new(h_table_size);
+    h = htable_new(h_table_size,container_type);
     /*Fill hash table up with words from file*/
     while (getword(word, sizeof word, infile)!= EOF){
       htable_insert(h,word);
