@@ -40,13 +40,12 @@ htable htable_new(int capacity, container_t c){
 
 void htable_free(htable h){
     int i;
-    printf("starting free\n");
     for (i=0;i<h->capacity;i++){
 	container_free(h->keys[i]);
     }
-    printf("Freed containers\n");
+    /*printf("Freed containers\n");*/
     free(h->keys);
-    printf("Freed array\n");
+    /* printf("Freed array\n");*/
     free(h);
 }
 
