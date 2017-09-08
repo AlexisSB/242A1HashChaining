@@ -31,6 +31,7 @@ rbt rbt_new() {
 }
 
 void rbt_preorder_print_colours(rbt b) {
+    /* this maybe doesn't need to exist in this form? */
     if (b == NULL) return;
     if (IS_RED(b)) printf("Red: %s\n", b->key);
     else printf("Black: %s\n", b->key);
@@ -38,6 +39,15 @@ void rbt_preorder_print_colours(rbt b) {
     rbt_preorder_print_colours(b->right);
 }
 
+void rbt_print(rbt r, FILE* stream) {
+    /* preorder print */
+    if (r == NULL) return;
+    fprintf(stream, "%s\n", r->key);
+    rbt_print(r->left, stream);
+    rbt_print(r->right, stream);
+}
+
+/* not sure if we're actually going to need rbt_preorder / rbt_inorder ? */
 void rbt_preorder(rbt b, void function(char* str)) {
     if (b == NULL || strcmp(b->key, "") == 0) return;
     function(b->key);
@@ -81,51 +91,6 @@ rbt rbt_free(rbt b) {
     }
     free(b);
     return NULL;
-}
-
-rbt rbt_delete(rbt b, char* str) {
-    int compare;
-    rbt other = NULL;
-    if (b == NULL || b->key == NULL) {
-        return b;
-    }
-    printf("Deleting %s\n", str);
-    compare = strcmp(b->key, str);
-    if (compare == 0) {
-        if (b->left == NULL && b->right == NULL) {
-            /* no children */
-            return rbt_free(b);;
-        } else if (b->right == NULL) {
-            /* left child only */
-            other = assign_string(other, b->left->key);
-            b = rbt_free(b);
-            return other;
-        } else if (b->left == NULL) {
-            /* right child only */
-            other = assign_string(other, b->right->key);
-            b = rbt_free(b);
-            return other;
-        } else {
-            /* two children */
-            other = b->right;
-            while (other->left != NULL) {
-                other = other->left;
-            }
-            strcpy(b->key, other->key);
-            if (other->right != NULL) {
-                strcpy(other->key, other->right->key);
-                other->right = rbt_free(other->right);
-            } else {
-                other = NULL;
-            }
-            return b;
-        }
-    } else if (compare > 0) {
-        b->left = rbt_delete(b->left, str);
-    } else {
-        b->right = rbt_delete(b->right, str);
-    }
-    return b;
 }
 
 rbt left_rotate(rbt r) {

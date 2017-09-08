@@ -32,12 +32,27 @@ void container_free(container c) {
 }
 
 void container_add(container c, char *word) {
-    printf("Adding %s\n", word);
     if (c->type == RED_BLACK_TREE) {
         c->contents = rbt_insert(c->contents, word);
     } else {
         /*flexarray_append(c->contents, word);
          * Commented out b/c flexarray doesn't work with strings yet
          */
+    }
+}
+
+int container_search(container c, char* str) {
+    if (c->type == RED_BLACK_TREE) {
+        return rbt_search(c->contents, str);
+    } else {
+        return flexarray_search(c->contents, str);
+    }
+}
+
+void container_print(container c, FILE* stream) {
+    if (c->type == RED_BLACK_TREE) {
+        rbt_print(c->contents, stream);
+    } else {
+        flexarray_print(c->contents, stream);
     }
 }

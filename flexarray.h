@@ -6,7 +6,8 @@ typedef struct flexarrayrec *flexarray;
 extern void flexarray_append(flexarray f, int item);
 extern void flexarray_free(flexarray f);
 extern flexarray flexarray_new();
-extern void flexarray_print(flexarray f);
+extern void flexarray_print(flexarray f, FILE* stream);
+extern int flexarray_search(flexarray f, char* str);
 extern void flexarray_sort(flexarray f);
 
 #endif

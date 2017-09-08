@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "flexarray.h"
 #include "mylib.h"
@@ -28,10 +29,10 @@ void flexarray_append(flexarray f, int num) {
     f->itemcount++;
 }
 
-void flexarray_print(flexarray f) {
+void flexarray_print(flexarray f, FILE* stream) {
     int i;
     for(i=0;i<f->itemcount;i++){
-        printf("%d\n",f->items[i]);
+        fprintf(stream, "%d\n",f->items[i]);
     }
 }
 /* Are we doing any sorting for assignment?*/
@@ -56,4 +57,18 @@ void flexarray_free(flexarray f) {
 
 int flexarray_size(flexarray f){
     return f->itemcount;
+}
+
+int flexarray_search(flexarray f, char* str) {
+    /* this should maybe not use a sequential search */
+    int i;
+    for (i=0; i < f->itemcount; i++) {
+        /* this isn't going to work until we make flexarray store strings
+        if (strcmp(f->items[i], str) == 0) {
+            return 1;
+        }*/   
+    }
+    /* this is just here to avoid the unused parameter warning */
+    printf("Search for %s\n", str);
+    return 0;
 }
