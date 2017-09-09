@@ -14,6 +14,24 @@
 
 enum print_option {PRINT, DONT_PRINT};
 
+void print_error_message(){
+  FILE *helpfile;
+  char input[255];
+  char *status;
+
+  helpfile = fopen("error_message.txt","r");
+
+  if(helpfile ==NULL){
+    fprintf(stderr, " Can't find help file\n");
+  }else{
+    status = fgets(input, sizeof(input), helpfile);
+    while (status){
+      fprintf(stderr,"%s", input);
+      status = fgets(input, sizeof(input), helpfile);
+    }
+  }
+}
+
 int main(int argc, char **argv) {
      FILE *infile;
      htable h;
@@ -58,6 +76,8 @@ int main(int argc, char **argv) {
           case 'h':
 	       /*print help message*/
 	       printf("Option : %c\n",option);
+	       print_error_message();
+	       exit(EXIT_SUCCESS);
 	       break;
           default:
 	       /*print error then usage message*/
