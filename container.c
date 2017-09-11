@@ -13,7 +13,7 @@ struct containerrec {
 };
 
 container container_new(container_t container_type) {
-    container new_container = emalloc(sizeof(new_container));
+    container new_container = emalloc(sizeof(*new_container));
     new_container->type =container_type;
     
     if (container_type == RED_BLACK_TREE) {
@@ -28,6 +28,7 @@ void container_free(container c) {
     /*printf("hello i'm container free\n");*/
     if(c ==NULL){
         free(c);
+        return;
     }else if (c->type == RED_BLACK_TREE) {
         /*printf("Starting rbt free\n");*/
         rbt_free(c->contents);
