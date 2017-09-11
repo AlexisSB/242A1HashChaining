@@ -39,29 +39,22 @@ void rbt_preorder_print_colours(rbt b) {
     rbt_preorder_print_colours(b->right);
 }
 
+void print_key(char* str, FILE* stream) {
+    fprintf(stream, "%s ", str);
+}
+
+void rbt_preorder(rbt b, void function(char* str, FILE* stream), FILE* stream) {
+    if (b == NULL || strcmp(b->key, "") == 0) return;
+    function(b->key, stream);
+    rbt_preorder(b->left, function, stream);
+    rbt_preorder(b->right, function, stream);
+}
+
 void rbt_print(rbt r, FILE* stream) {
     /* preorder print */
     if (r == NULL) return;
-    fprintf(stream, "%s\n", r->key);
-    rbt_print(r->left, stream);
-    rbt_print(r->right, stream);
-}
-
-/* not sure if we're actually going to need rbt_preorder / rbt_inorder ? */
-void rbt_preorder(rbt b, void function(char* str)) {
-    if (b == NULL || strcmp(b->key, "") == 0) return;
-    function(b->key);
-    rbt_preorder(b->left, function);
-    rbt_preorder(b->right, function);
-}
-
-void rbt_inorder(rbt b, void function(char* str)) {
-    if (b == NULL || strcmp(b->key, "") == 0) {
-        return;
-    }
-    rbt_inorder(b->left, function);
-    function(b->key);
-    rbt_inorder(b->right, function);
+    rbt_preorder(r, print_key, stream);
+    fprintf(stream, "\n");
 }
 
 int rbt_search(rbt b, char* str) {
@@ -83,7 +76,6 @@ rbt rbt_free(rbt b) {
     if (b == NULL) {
         return NULL;
     }
-    if (strcmp(b->key, "") == 0) printf("EMPTY\n");
     rbt_free(b->left);
     rbt_free(b->right);
     if (b->key != NULL) {

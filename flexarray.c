@@ -32,8 +32,9 @@ void flexarray_append(flexarray f, int num) {
 void flexarray_print(flexarray f, FILE* stream) {
     int i;
     for(i=0;i<f->itemcount;i++){
-        fprintf(stream, "%d\n",f->items[i]);
+        fprintf(stream, "%d ",f->items[i]);
     }
+    fprintf(stream, "\n");
 }
 /* Are we doing any sorting for assignment?*/
 void flexarray_sort(flexarray f) {
