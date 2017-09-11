@@ -40,7 +40,7 @@ void container_free(container c) {
 
 int container_add(container c, char *word) {
     if (c->type == RED_BLACK_TREE) {
-        c->contents = rbt_insert(c->contents, word);
+        c->contents = rbt_do_insertion(c->contents, word);
     } else {
         /*flexarray_append(c->contents, word);
          * Commented out b/c flexarray doesn't work with strings yet
