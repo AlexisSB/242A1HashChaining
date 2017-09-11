@@ -171,6 +171,7 @@ rbt rbt_do_insertion(rbt b, char* str){
        problematic with recursion */
     b = rbt_insert(b, str);
     b->colour = BLACK;
+    return b;
 }
 
 rbt rbt_insert(rbt b, char* str) {

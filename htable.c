@@ -57,19 +57,17 @@ static unsigned int htable_word_to_int(char *word){
   return result;
 }
 
-int htable_insert(htable h, char *str){
+void htable_insert(htable h, char *str){
     unsigned int wordnumber;
     unsigned int hashvalue;
-    int result;
-    
+      
     wordnumber = htable_word_to_int(str);
     hashvalue = wordnumber % (h->capacity);
     if (h->keys[hashvalue] == NULL){
         h->keys[hashvalue] = container_new(h->container_type);
     }
-    result = container_add(h->keys[hashvalue],str);
-    
-    return result;
+    container_add(h->keys[hashvalue],str);
+      
 }
 
 void htable_print(htable h , FILE *stream){
