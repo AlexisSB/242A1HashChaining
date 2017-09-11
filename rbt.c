@@ -26,6 +26,8 @@ rbt assign_string(rbt b, char* str) {
 
 rbt rbt_new() {
     rbt result = emalloc(sizeof *result);
+    result->left = NULL;
+    result->right = NULL;    
     result->colour = RED;
     return result;
 }
@@ -102,9 +104,10 @@ rbt right_rotate(rbt r) {
 }
 
 rbt rbt_fix(rbt r) {
-    if (r->left != NULL && IS_RED(r->left)) {
-        if (IS_RED(r->left->left)) {
-            if (IS_RED(r->right)) {
+    
+    if (r->left != NULL && IS_RED(r->left)) {/*Has a red left child*/
+        if (IS_RED(r->left->left)) {/*left left is red*/
+            if (IS_RED(r->right)) {/*right is black*/
                 /*make R red, make R's children black*/
                 r->colour = RED;
                 r->left->colour = BLACK;
@@ -115,7 +118,7 @@ rbt rbt_fix(rbt r) {
                 r->colour = BLACK;
                 r->right->colour = RED;
             }
-        } else if (IS_RED(r->left->right)) {
+        } else if (IS_RED(r->left->right)) {/*red left, left right red*/
             if (IS_RED(r->right)) {
                 /*make R red, make R's children black*/
                 r->colour = RED;
@@ -131,8 +134,8 @@ rbt rbt_fix(rbt r) {
             }
         }
     }
-    if (r->right != NULL && IS_RED(r->right)) {
-        if (IS_RED(r->right->left)) {
+    if (r->right != NULL && IS_RED(r->right)) {/*right red and not null*/
+        if (IS_RED(r->right->left)) {/*right left red*/
             if (IS_RED(r->left)) {
                 /*make R red, make R's children black*/
                 r->colour = RED;

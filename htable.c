@@ -74,10 +74,11 @@ int htable_insert(htable h, char *str){
 
 void htable_print(htable h , FILE *stream){
     int i;
-    fprintf(stream, "Key\n");
+    /*fprintf(stream, "Key\n");*/
     for (i =0; i<h->capacity;i++){
-      if (h->keys[i] != NULL){
-	container_print(h->keys[i],stream);
+        if (h->keys[i] != NULL){
+          fprintf(stream,"%-6d",i);
+          container_print(h->keys[i],stream);
       }
     }
 }
