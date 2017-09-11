@@ -163,21 +163,25 @@ rbt rbt_fix(rbt r) {
     return r;
 }
 
+rbt rbt_do_insertion(rbt b, char* str){
+    /* this is here because setting the root colour is
+       problematic with recursion */
+    b = rbt_insert(b, str);
+    b->colour = BLACK;
+}
+
 rbt rbt_insert(rbt b, char* str) {
     int compare;
     if (b == NULL || b->key == NULL) {
         b = assign_string(b, str);
     } else {
         compare = strcmp(b->key, str);
-        if (compare == 0) {
-            b = assign_string(b, str);
-        } else if (compare > 0) {
+        if (compare >= 0) {
             b->left = rbt_insert(b->left, str);
         } else {
             b->right = rbt_insert(b->right, str);
         }
     }
     b = rbt_fix(b);
-    b->colour = BLACK;
     return b;
 }
