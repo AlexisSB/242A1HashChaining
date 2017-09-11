@@ -49,11 +49,11 @@ int is_present(flexarray f, char* str) {
     return 0;
 }
 
-/*Call with print_key method*/
 void visit(flexarray a, void f(char* str)) {
     int i;
     for (i=0; i < a->itemcount; i++) {
-        f(a->items[i]);
+        f(a->items[i], stdout);
     }
+    fprintf(stdout, "\n");
 }
 
