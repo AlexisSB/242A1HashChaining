@@ -178,5 +178,6 @@ rbt rbt_insert(rbt b, char* str) {
         }
     }
     b = rbt_fix(b);
+    b->colour = BLACK;
     return b;
 }
