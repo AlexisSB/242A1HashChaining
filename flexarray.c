@@ -40,7 +40,6 @@ int flexarray_size(flexarray f){
 }
 
 int is_present(flexarray f, char* str) {
-    /* this should maybe not use a sequential search */
     int i;
     for (i=0; i < f->itemcount; i++) {
         if (strcmp(f->items[i], str) == 0) {
@@ -50,6 +49,7 @@ int is_present(flexarray f, char* str) {
     return 0;
 }
 
+/*Call with print_key method*/
 void visit(flexarray a, void f(char* str)) {
     int i;
     for (i=0; i < a->itemcount; i++) {
@@ -57,6 +57,3 @@ void visit(flexarray a, void f(char* str)) {
     }
 }
 
-void flexarray_print(char *str){
-    printf("%s\n", str);
-}

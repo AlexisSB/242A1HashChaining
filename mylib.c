@@ -30,6 +30,8 @@ void *do_debug_emalloc(long line, char *file, size_t size){
   }
 }
 
+
+
 /* Vanilla memory allocation with error checking.
  * @param size - memory size to allocate.
  * @return void pointer to start of allocated memory. 
@@ -53,6 +55,11 @@ void *erealloc(void *p, size_t s){
   }
   return result;
 }
+
+void print_key(char* str) {
+    fprintf(stream, "%s ", str);
+}
+
 
 /* Insertion sort.
  * In place, O(n^2). 

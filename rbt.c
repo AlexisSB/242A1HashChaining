@@ -41,10 +41,6 @@ void rbt_preorder_print_colours(rbt b) {
     rbt_preorder_print_colours(b->right);
 }
 
-void print_key(char* str, FILE* stream) {
-    fprintf(stream, "%s ", str);
-}
-
 void rbt_preorder(rbt b, void function(char* str, FILE* stream), FILE* stream) {
     if (b == NULL || strcmp(b->key, "") == 0) return;
     function(b->key, stream);

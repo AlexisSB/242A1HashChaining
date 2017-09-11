@@ -53,7 +53,7 @@ int container_search(container c, char* str) {
     if (c->type == RED_BLACK_TREE) {
         return rbt_search(c->contents, str);
     } else {
-        return flexarray_search(c->contents, str);
+        return is_present(c->contents, str);
     }
 }
 
@@ -61,6 +61,6 @@ void container_print(container c, FILE* stream) {
     if (c->type == RED_BLACK_TREE) {
         rbt_print(c->contents, stream);
     } else {
-        flexarray_print(c->contents, stream);
+        visit(c->contents, print_key(char *str));
     }
 }
