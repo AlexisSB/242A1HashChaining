@@ -15,6 +15,7 @@ struct containerrec {
 container container_new(container_t container_type) {
     container new_container = emalloc(sizeof(new_container));
     new_container->type =container_type;
+    
     if (container_type == RED_BLACK_TREE) {
         new_container->contents = rbt_new();
     } else {
@@ -38,15 +39,13 @@ void container_free(container c) {
     free(c);
 }
 
-int container_add(container c, char *word) {
+void container_add(container c, char *word) {
     if (c->type == RED_BLACK_TREE) {
         c->contents = rbt_insert(c->contents, word);
     } else {
-        /*flexarray_append(c->contents, word);
-         * Commented out b/c flexarray doesn't work with strings yet
-         */
+        /*Wont work until flexarray works with strings*/
+        flexarray_append(c->contents, word);
     }
-    return 0;
 }
 
 int container_search(container c, char* str) {

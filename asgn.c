@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     
 	  if (print_hash_table == PRINT){
 	       htable_print(h,stdout);
-	       /*Here to stop compiler warning ask demo???*/
+	       /*variables set to stop compiler warning ask demo???*/
 	       start_search = 0;
 	       finish_search = 0;
 	  }else{
