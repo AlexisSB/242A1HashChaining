@@ -15,6 +15,10 @@ struct rbtnode {
 #define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
 #define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
 
+/* Allocates memory for a new red-black tree.
+   Sets key, left, and right to 
+   @return New red-black tree
+ */
 rbt rbt_new() {
     rbt result = emalloc(sizeof *result);
     result->key =NULL;
@@ -24,27 +28,17 @@ rbt rbt_new() {
     return result;
 }
 
-void rbt_preorder_print_colours(rbt b) {
-    /* this maybe doesn't need to exist in this form? */
-    if (b == NULL) return;
-    if (IS_RED(b)) printf("Red: %s\n", b->key);
-    else printf("Black: %s\n", b->key);
-    rbt_preorder_print_colours(b->left);
-    rbt_preorder_print_colours(b->right);
-}
-
-void rbt_preorder(rbt b, void function(char* str, FILE* stream), FILE* stream) {
+void rbt_preorder(rbt b, void function(char* str)) {
     if (b == NULL || strcmp(b->key, "") == 0) return;
-    function(b->key, stream);
-    rbt_preorder(b->left, function, stream);
-    rbt_preorder(b->right, function, stream);
+    function(b->key);
+    rbt_preorder(b->left, function);
+    rbt_preorder(b->right, function);
 }
 
-void rbt_print(rbt r, FILE* stream) {
-    /* preorder print */
+void rbt_print(rbt r) {
     if (r == NULL) return;
-    rbt_preorder(r, print_key, stream);
-    fprintf(stream, "\n");
+    rbt_preorder(r, print_key);
+    fprintf(stdout, "\n");
 }
 
 int rbt_search(rbt b, char* str) {

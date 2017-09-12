@@ -70,13 +70,15 @@ int is_present(flexarray f, char* str) {
     return 0;
 }
 
+
 /* runs a function on every item in the flexarray
    @param a: the flexarray to be traversed
-   @param f: the function to be run (takes a string and a file as params)*/
-void visit(flexarray a, void f(char* str, FILE* stream)) {
+   @param f: the function to be run (takes a string as param)*/
+void visit(flexarray a, void f(char* str)) {
+
     int i;
     for (i=0; i < a->itemcount; i++) {
-        f(a->items[i], stdout);
+        f(a->items[i]);
     }
     fprintf(stdout, "\n");
 }
