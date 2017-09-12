@@ -76,7 +76,7 @@ void htable_print(htable h , FILE *stream){
     for (i =0; i<h->capacity;i++){
         if (h->keys[i] != NULL){
           fprintf(stream,"%-6d",i);
-          container_print(h->keys[i],stream);
+          container_print(h->keys[i]);
       }
     }
 }
