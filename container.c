@@ -7,16 +7,18 @@
 #include "mylib.h"
 
 /* container struct
-   type: enum (RED_BLACK_TREE or FLEX_ARRAY)
-   contents: pointer to the contents of the rbt or flexarray */
+ * type: enum (RED_BLACK_TREE or FLEX_ARRAY)
+ * contents: pointer to the contents of the rbt or flexarray
+ */
 struct containerrec {
   container_t type;
   void *contents;
 };
 
 /* creates a new container
-   @param container_type: specifies which type (rbt or flexarray) to be created
-   @return newly created container of correct type */
+ * @param container_type: specifies which type (rbt or flexarray) to be created
+ * @return newly created container of correct type
+ */
 container container_new(container_t container_type) {
     container new_container = emalloc(sizeof(*new_container));
     new_container->type =container_type;
