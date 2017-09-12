@@ -48,21 +48,24 @@ void *erealloc(void *p, size_t s){
 }
 
 /*
- * 
+ * Prints a container key to stdout.
+ * Used in recursive traverse of flexarray and red-black tree.
+ * See flexarray.c and rbt.c.
+ * @param str - key string of container.
  */ 
 void print_key(char* str) {
-    fprintf(stream, "%s ", str);
+    printf(stream, "%s ", str);
 }
 
-/*Recursive print method for an array*/
-void print_array(int *a, int n){
-  if(n>0){
-    printf("%d\n",a[0]);
-    print_array(a+1,n-1);
-  }
-}
-
-/* From lab book may want to get clarification*/
+/* Gets a string of certain length from a stream.
+ * Function taken from COSC242 Lab manual, page 78.
+ * Availible at www.cs.otago.ac.nz/cosc242/pdf/lab-book.pdf.
+ * @param
+ * @param
+ * @param
+ */
+ 
+ 
 int getword(char *s, int limit, FILE *stream){
   int c;
   char *w = s;
