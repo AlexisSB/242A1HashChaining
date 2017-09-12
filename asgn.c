@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
 	  }	       
 	  
 	  /*htable_print(h,stdout);*/
-	  printf("Starting free\n");
+	  /*printf("Starting free\n");*/
 	  htable_free(h);
 
 	  fclose(infile);

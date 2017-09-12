@@ -25,17 +25,13 @@ container container_new(container_t container_type) {
 }
 
 void container_free(container c) {
-    printf("hello i'm container free\n");
     if(c !=NULL){
         if (c->type == RED_BLACK_TREE) {
-            printf("Starting rbt free\n");
             rbt_free(c->contents);
         } else {
-            printf ("Flexifree\n");
             flexarray_free(c->contents);
         }
     }
-    printf("final free\n");
     free(c);
 }
 
