@@ -1,12 +1,12 @@
- - Check default hash table size 3877.
- - All malloc gets freed.
- - Convert flexarray to work with strings
- - add search funciton to flexarray called is_present()
- - add visit() function to flexarray
+ - Check default hash table size 3877. DONE - in asgn.c
+ - All malloc gets freed. DONE checked with valgrind
+ - Convert flexarray to work with strings DONE
+ - add search funciton to flexarray called is_present()DONE
+ - add visit() function to flexarray DONE
        - visit takes a function as a parxameter and prints each itme in the flexarray similar to RBT preorder function
- - Figure out what visit is supposed to do.
+ - Figure out what visit is supposed to do. DONE
 
- - Check that getword and emalloc in the mylib.c file and mylib.h header
+ - Check that getword and emalloc in the mylib.c file and mylib.h header DONE
  - Version control everything including mylib
  - Create a make file for the whole thing.
 

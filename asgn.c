@@ -61,6 +61,11 @@ int main(int argc, char **argv) {
 	       /*Need error check for option if no following opt arg*/
 	       printf("Option : %c\n",option);
 	       h_table_size = atoi(optarg);
+               /* Add check for zero size*/
+               if (h_table_size ==0){
+                   fprintf(stderr,"Error: Hash table size set to 0\n");
+                   exit(EXIT_FAILURE);
+               }
 	       printf("Htable size = %d\n", h_table_size);
 	       break;
           case 'p' :
