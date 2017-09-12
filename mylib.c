@@ -54,19 +54,18 @@ void *erealloc(void *p, size_t s){
  * @param str - key string of container.
  */ 
 void print_key(char* str) {
-    printf(stream, "%s ", str);
+    printf("%s ", str);
 }
 
 /* Gets a string of certain length from a stream.
  * Function taken from COSC242 Lab manual, page 78.
  * Availible at www.cs.otago.ac.nz/cosc242/pdf/lab-book.pdf.
- * @param
- * @param
- * @param
+ * @param s - address to copy the string to.
+ * @param limit - maximum length of the string.
+ * @param stream - input stream to take string from.
+ * @return int the number of character added to the string.
  */
- 
- 
-int getword(char *s, int limit, FILE *stream){
+ int getword(char *s, int limit, FILE *stream){
   int c;
   char *w = s;
   /*Tests to make sure everything set up properly*/
