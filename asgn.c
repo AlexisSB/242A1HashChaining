@@ -81,7 +81,9 @@ int main(int argc, char **argv) {
 	       break;
           default:
 	       /*print error then usage message*/
-	       printf("default");
+	       printf("default\n");
+               print_error_message();
+	       exit(EXIT_SUCCESS);
 	       break;
 	  }
      }
@@ -106,10 +108,7 @@ int main(int argc, char **argv) {
     
 	  if (print_hash_table == PRINT){
 	       htable_print(h,stdout);
-	       /*variables set to stop compiler warning ask demo???*/
-	       start_search = 0;
-	       finish_search = 0;
-	  }else{
+          }else{
 	       /* Take words in from stdin*/
 	       /* Search for input words in the hashtable*/
 	       start_search = clock();
@@ -120,19 +119,16 @@ int main(int argc, char **argv) {
 		    }
 	       }
 	       finish_search = clock();
-	       
-	  }
-	  
-	  if (print_time_info == PRINT){
-	       /*Print insert timing*/
-	       insert_time = (double)(finish_insert-start_insert)/(double)CLOCKS_PER_SEC;
-	       fprintf(stderr, "Fill time:\t%.6f\n", insert_time);
-	       if (print_hash_table == DONT_PRINT){
-		    search_time = (double)(finish_search-start_search)/(double)CLOCKS_PER_SEC;
-		    fprintf(stderr, "Search time:\t%.6f\n", search_time);
-		    fprintf(stderr, "Unknown words:\t%d\n", unknown_word_counter);  
-	       }
-	  }	       
+	    
+               if (print_time_info == PRINT){
+                   /*Print insert timing*/
+                   insert_time = (double)(finish_insert-start_insert)/(double)CLOCKS_PER_SEC;
+                   fprintf(stderr, "Fill time:\t%.6f\n", insert_time);
+                   search_time = (double)(finish_search-start_search)/(double)CLOCKS_PER_SEC;
+                   fprintf(stderr, "Search time:\t%.6f\n", search_time);
+                   fprintf(stderr, "Unknown words:\t%d\n", unknown_word_counter);  
+               }
+          }
 	  
 	  /*htable_print(h,stdout);*/
 	  /*printf("Starting free\n");*/

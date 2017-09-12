@@ -15,17 +15,9 @@ struct rbtnode {
 #define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
 #define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
 
-rbt assign_string(rbt b, char* str) {
-    if (b == NULL) {
-        b = rbt_new();
-    }
-    b->key = emalloc((strlen(str) + 1) * sizeof(char));
-    strcpy(b->key, str);
-    return b;
-}
-
 rbt rbt_new() {
     rbt result = emalloc(sizeof *result);
+    result->key =NULL;
     result->left = NULL;
     result->right = NULL;    
     result->colour = RED;
@@ -56,7 +48,7 @@ void rbt_print(rbt r, FILE* stream) {
 }
 
 int rbt_search(rbt b, char* str) {
-    int compare;
+    int compare = 0;
     if (b == NULL || strcmp(b->key, "") == 0) {
         return 0;
     }
@@ -171,9 +163,14 @@ rbt rbt_do_insertion(rbt b, char* str){
 }
 
 rbt rbt_insert(rbt b, char* str) {
-    int compare;
-    if (b == NULL || b->key == NULL) {
-        b = assign_string(b, str);
+    int compare = 0;
+    if (b == NULL){
+        b = rbt_new();
+    }
+    if (b->key == NULL) {
+        b->key = emalloc((strlen(str) + 1) * sizeof(char));
+        strcpy(b->key, str);
+        b->colour = RED;
     } else {
         compare = strcmp(b->key, str);
         if (compare >= 0) {
@@ -182,6 +179,7 @@ rbt rbt_insert(rbt b, char* str) {
             b->right = rbt_insert(b->right, str);
         }
     }
+    
     b = rbt_fix(b);
     return b;
 }
