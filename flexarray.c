@@ -32,6 +32,10 @@ void flexarray_append(flexarray f, char *str) {
 
 
 void flexarray_free(flexarray f) {
+    int i;
+    for (i=0; i<f->itemcount; i++) {
+        free(f->items[i]);
+    }
     free(f->items);
     free(f);
 }
