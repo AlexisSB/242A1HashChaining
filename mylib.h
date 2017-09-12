@@ -5,7 +5,7 @@
 extern void *emalloc(size_t size);
 extern void *erealloc(void *p, size_t s);
 
-extern void print_key(char* str, FILE* stream);
+extern void print_key(char* str);
 
 extern void merge_sort(int *array,int len,int *workspace);
 extern void quick_sort(int *array, int size);

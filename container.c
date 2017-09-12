@@ -51,9 +51,9 @@ int container_search(container c, char* str) {
     }
 }
 
-void container_print(container c, FILE* stream) {
+void container_print(container c) {
     if (c->type == RED_BLACK_TREE) {
-        rbt_print(c->contents, stream);
+        rbt_print(c->contents);
     } else {
         visit(c->contents, print_key);
     }

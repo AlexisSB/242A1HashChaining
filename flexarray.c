@@ -54,10 +54,10 @@ int is_present(flexarray f, char* str) {
     return 0;
 }
 
-void visit(flexarray a, void f(char* str, FILE* stream)) {
+void visit(flexarray a, void f(char* str)) {
     int i;
     for (i=0; i < a->itemcount; i++) {
-        f(a->items[i], stdout);
+        f(a->items[i]);
     }
     fprintf(stdout, "\n");
 }
