@@ -7,27 +7,27 @@
  - Figure out what visit is supposed to do. DONE
 
  - Check that getword and emalloc in the mylib.c file and mylib.h header DONE
- - Version control everything including mylib
- - Create a make file for the whole thing.
+ - Version control everything including mylib DONE
+ - Create a make file for the whole thing. DONE
 
 Red/Black Tree
- - Modify RBT so that duplicate words can be added.
- - Change program so that it checks root is always black.
- -make a preorder print function.
+ - Modify RBT so that duplicate words can be added. DONE
+ - Change program so that it checks root is always black. DONE
+ - make a preorder print function. DONE
 
 Printing out containers
 
-- each non-empty container should be printed on new line with space between items:
+- each non-empty container should be printed on new line with space between items: DONE
        - <hash index> <item> <item> <item> ...
- - Items for an RBT to be printed in preorder
+ - Items for an RBT to be printed in preorder DONE
 
-- make container.h and container.
- - container defined by enum type in container.h
-typedef enum container_e {FLEX_ARRAY, RED_BLACK_TREE} container_t;
+- make container.h and container.c DONE
+ - container defined by enum type in container.h DONE
+typedef enum container_e {FLEX_ARRAY, RED_BLACK_TREE} container_t; DONE
 
 For main program
- - add different options for command line arguements
- - Use the getopt library for this see page 3.
+ - add different options for command line arguements DONE
+ - Use the getopt library for this see page 3. DONE
  - -r
  - -s tablesize
  - -i 
