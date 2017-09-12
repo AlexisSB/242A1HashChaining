@@ -44,7 +44,6 @@ void container_add(container c, char *word) {
     if (c->type == RED_BLACK_TREE) {
         c->contents = rbt_do_insertion(c->contents, word);
     } else {
-        /*Wont work until flexarray works with strings*/
         flexarray_append(c->contents, word);
     }
 }

@@ -25,7 +25,8 @@ void flexarray_append(flexarray f, char *str) {
         f->capacity = f->capacity*2;
         f->items = erealloc(f->items,f->capacity*sizeof f->items[0]);
     }
-    f->items[f->itemcount] = str;
+    f->items[f->itemcount] = emalloc((strlen(str)+1) * sizeof f->items[f->itemcount][0]);
+    strcpy(f->items[f->itemcount], str);
     f->itemcount++;
 }
 
