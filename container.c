@@ -61,6 +61,6 @@ void container_print(container c, FILE* stream) {
     if (c->type == RED_BLACK_TREE) {
         rbt_print(c->contents, stream);
     } else {
-        visit(c->contents, print_key(char *str));
+        visit(c->contents, print_key);
     }
 }

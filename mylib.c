@@ -56,7 +56,7 @@ void *erealloc(void *p, size_t s){
   return result;
 }
 
-void print_key(char* str) {
+void print_key(char* str, FILE* stream) {
     fprintf(stream, "%s ", str);
 }
 

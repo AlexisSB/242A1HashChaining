@@ -9,6 +9,5 @@ extern flexarray flexarray_new();
 extern int is_present(flexarray f, char* str);
 extern void flexarray_sort(flexarray f);
 extern void visit(flexarray a, void f(char* str, FILE* stream));
-extern void flexarray_print(char *str, FILE* stream);
 
 #endif
