@@ -1,10 +1,29 @@
 #!/bin/bash
 
+let count_files=0
+let count_success=0
+
 for var in $@
 do
+    let "count_files++"
     echo "Checking $var"
     grep -n '.\{80\}' $var
-
+    if [ $? != 0 ]
+    then
+	let "count_success++"
+    fi
+    
 done
 
-exit $?
+#echo $count_files
+#echo $count_success
+
+if [ $count_success == $count_files ]
+then
+    #echo 0
+    exit 0
+else
+    #echo 1
+    exit 1
+fi
+
