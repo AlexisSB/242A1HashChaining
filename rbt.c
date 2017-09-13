@@ -4,20 +4,29 @@
 #include "mylib.h"
 #include "rbt.h"
 
+#define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
+#define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
+
 typedef enum { RED, BLACK } rbt_colour;
 
+
+/* Red Black Tree node struct.
+ * key - root node key
+ * colour - colour of root node (red/black)
+ * left - left subtree.
+ * right - rigth subtree.
+ */
 struct rbtnode {
     char* key;
     rbt_colour colour;
     rbt left, right;
 };
 
-#define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
-#define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
+
 
 /* Allocates memory for a new red-black tree.
-   Sets key, left, and right to 
-   @return New red-black tree
+ * Sets key, left, and right to null. 
+ * @return new empty red-black tree
  */
 rbt rbt_new() {
     rbt result = emalloc(sizeof *result);
