@@ -25,9 +25,9 @@ void print_help_message(){
     FILE *helpfile;
     char input[255];
     char *status;
-
+    
     helpfile = fopen("error_message.txt","r");
-
+    
     if(helpfile ==NULL){
         fprintf(stderr, " Can't find help file\n");
     }else{
@@ -43,9 +43,11 @@ void print_help_message(){
  * Main program takes in two groups of words.
  * The first group is taken from a file given as an arguement.
  * The words from the first group are inserted into a hashtable.
- * The hash table uses either a dynamic array or a red black tree to store words.
+ * The hash table can use either a dynamic flexarray or a red black tree
+ * to store words.
  * The second group of words is taken from stdin.
- * Words that occur in the second group but not the first are printed to stdout.
+ * Any words in second group that cannot be found in the first group
+ * are printed to stdout.
  * Options:
  *     -h         print help message
  *     -i         print timing info
@@ -146,7 +148,7 @@ int main(int argc, char **argv) {
             /* Search for input words in the hashtable*/
             start_search = clock();
             while ((getword(word,sizeof word, stdin)!=EOF)){
-                if (!(htable_search(h,word))){
+                if (htable_search(h,word)==0){
                     printf("%s\n",word);
                     unknown_word_counter++;
                 }
@@ -154,11 +156,13 @@ int main(int argc, char **argv) {
             finish_search = clock();
 	    
             if (print_time_info == PRINT){ /*Print insert timing*/
-                insert_time = (double)(finish_insert-start_insert)/(double)CLOCKS_PER_SEC;
+                insert_time =
+		  (double)(finish_insert-start_insert)/CLOCKS_PER_SEC;
                 fprintf(stderr, "Fill time:\t%.6f\n", insert_time);
-                search_time = (double)(finish_search-start_search)/(double)CLOCKS_PER_SEC;
+                search_time =
+		  (double)(finish_search-start_search)/CLOCKS_PER_SEC;
                 fprintf(stderr, "Search time:\t%.6f\n", search_time);
-                fprintf(stderr, "Unknown words:\t%d\n", unknown_word_counter);  
+                fprintf(stderr, "Unknown words:\t%d\n", unknown_word_counter);
             }
         }
 	  

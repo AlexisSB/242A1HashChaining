@@ -7,11 +7,12 @@
 #include "rbt.h"
 #include "flexarray.h"
 
-/* htable struct
-   capacity: total capacity of the htable
-   num_keys: number of items currently held in the htable
-   container_type: RED_BLACK_TREE or FLEX_ARRAY
-   keys: the items themselves */
+/* Hash table struct.
+ * capacity - total capacity of the hash table
+ * num_keys - number of items currently held in the hash table
+ * container_type - type of container used in htable (RED_BLACK_TREE/FLEX_ARRAY)
+ * keys - pointer to rows in the hash table.
+ */
 struct htablerec {
     int capacity;
     int num_keys;
@@ -19,11 +20,12 @@ struct htablerec {
     container *keys;
 };
 
-/* creates a new htable
-   allocates memory required for a new htable
-   @param capacity: how big the htable will be
-   @param c: which type of container the htable should use
-   @return newly created htable */
+/* Creates a new hash table.
+ * Allocates memory required for a new htable.
+ * @param capacity - how big the htable will be
+ * @param c - which type of container the htable should use
+ * @return newly created htable
+ */
 htable htable_new(int capacity, container_t c){
     htable result = emalloc(sizeof *result);
     int i;
@@ -46,8 +48,9 @@ htable htable_new(int capacity, container_t c){
     return result;
 }
 
-/* frees the memory associated with the htable
-   @param h: the htable to be freed */
+/* Frees the memory associated with the hash table.
+ * @param h - the htable to be freed
+ */
 void htable_free(htable h){
     int i;
     for (i=0;i<h->capacity;i++){
@@ -59,9 +62,10 @@ void htable_free(htable h){
     free(h);
 }
 
-/* turns a string into an int
-   @param word: the string to be turned into an int
-   @return the resulting int */
+/* Converts string to an int for generating hash value.
+ * @param word - the string to be turned into an int
+ * @return the resulting int value.
+ */
 static unsigned int htable_word_to_int(char *word){
   unsigned int result = 0;
   while (*word != '\0') {
@@ -70,9 +74,10 @@ static unsigned int htable_word_to_int(char *word){
   return result;
 }
 
-/* inserts an item into the htable
-   @param h: the htable to which the item will be inserted
-   @param *str: the string to be inserted */
+/* Inserts an item into the hash table.
+ * @param h - the htable to which the item will be inserted
+ * @param *str - the string to be inserted 
+ */
 void htable_insert(htable h, char *str){
     unsigned int wordnumber;
     unsigned int hashvalue;
@@ -83,12 +88,12 @@ void htable_insert(htable h, char *str){
         h->keys[hashvalue] = container_new(h->container_type);
     }
     container_add(h->keys[hashvalue],str);
-      
 }
 
-/* prints every item in the htable
-   @param h: the htable to be printed
-   @param *stream: where the htable is to be printed */
+/* Prints every item in the hash table.
+ * @param h - the htable to be printed
+ * @param stream - output stream for printing.
+ */
 void htable_print(htable h , FILE *stream){
     int i;
     /*fprintf(stream, "Key\n");*/
@@ -100,11 +105,11 @@ void htable_print(htable h , FILE *stream){
     }
 }
 
-/* searches the htable for a string
-   @param h: the htable to be searched
-   @param str: the string to be searched for
-   @return 0 if the string is NOT in the htable, else
-           the index at which the string occurs */
+/* Searches the hashtable for a given string.
+ * @param h: the htable to be searched
+ * @param str: the string to be searched for
+ * @return 0 if the string is NOT in the htable, else returns 1
+ */
 int htable_search(htable h, char *str){
   unsigned int wordnumber;
   unsigned int hashvalue;
