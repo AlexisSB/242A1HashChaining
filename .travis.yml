@@ -5,4 +5,5 @@ before_install:
 script:
  - make asgn
  - valgrind ./asgn -r The-Gift-of-the-Magi.txt < test10words.txt
+ - ./checkstyle *
 
