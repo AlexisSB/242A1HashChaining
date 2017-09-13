@@ -2,6 +2,9 @@
 
 for var in $@
 do
-	echo "Checking $var"
-	grep -n '.\{80\}' $var
+    echo "Checking $var"
+    grep -n '.\{80\}' $var
+
 done
+
+exit $?
