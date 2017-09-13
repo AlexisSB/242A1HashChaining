@@ -16,8 +16,8 @@ struct containerrec {
 };
 
 /* Creates a new container.
- * @param container_type - specifies which type (rbt or flexarray) to be created
- * @return newly created container of desired type.
+ * @param container_type - specifies which the container type (rbt/flexarray)
+ * @return newly created container of desired type
  */
 container container_new(container_t container_type) {
     container new_container = emalloc(sizeof(*new_container));

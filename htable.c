@@ -10,7 +10,7 @@
 /* Hash table struct.
  * capacity - total capacity of the hash table
  * num_keys - number of items currently held in the hash table
- * container_type - type of container used in htable (RED_BLACK_TREE/FLEX_ARRAY)
+ * container_type - type of container used in hash table (rbt/flexarray)
  * keys - pointer to rows in the hash table.
  */
 struct htablerec {
