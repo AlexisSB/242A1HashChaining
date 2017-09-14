@@ -54,7 +54,7 @@ void *erealloc(void *p, size_t s){
  * @param str - key string of container.
  */ 
 void print_key(char* str) {
-    printf("%s ", str);
+    printf(" %s", str);
 }
 
 /* Gets a string of certain length from a stream.

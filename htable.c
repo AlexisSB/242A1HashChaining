@@ -99,7 +99,7 @@ void htable_print(htable h , FILE *stream){
     /*fprintf(stream, "Key\n");*/
     for (i =0; i<h->capacity;i++){
         if (h->keys[i] != NULL){
-          fprintf(stream,"%d ",i);
+          fprintf(stream,"%d",i);
           container_print(h->keys[i]);
       }
     }
