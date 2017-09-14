@@ -9,6 +9,6 @@ script:
  - ./asgn -p -s 7 mary.txt > testoutput1.txt
  - diff mary_output1.txt testoutput1.txt
  - ./asgn mary.txt -p -s 7 -r > testoutput2.txt
- - diff mary_ouput2.txt testoutput2.txt
+ - diff mary_output2.txt testoutput2.txt
  
 
