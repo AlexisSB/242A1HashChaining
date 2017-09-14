@@ -96,7 +96,7 @@ int main(int argc, char **argv) {
                             "Error: Hash table size not set or set to 0\n");
                     exit(EXIT_FAILURE);
                 }
-                printf("Htable size = %d\n", h_table_size);
+                /*printf("Htable size = %d\n", h_table_size);*/
                 break;
             case 'p' :
                 /*print to stdout*/

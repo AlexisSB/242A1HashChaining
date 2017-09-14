@@ -33,10 +33,10 @@ htable htable_new(int capacity, container_t c){
     result-> num_keys = 0;
     result->container_type = c;
     if (c == FLEX_ARRAY){
-        printf("Making flex array\n");
+        /*printf("Making flex array\n");*/
 	result->keys = emalloc((result->capacity) * sizeof(flexarray));
     }else{
-        printf("Making rbt \n");
+        /*printf("Making rbt \n");*/
 	result->keys = emalloc(result->capacity * sizeof(rbt));
         /*printf("done new rbt emalloc\n");*/
     }
@@ -99,7 +99,7 @@ void htable_print(htable h , FILE *stream){
     /*fprintf(stream, "Key\n");*/
     for (i =0; i<h->capacity;i++){
         if (h->keys[i] != NULL){
-          fprintf(stream,"%-6d",i);
+          fprintf(stream,"%d ",i);
           container_print(h->keys[i]);
       }
     }
