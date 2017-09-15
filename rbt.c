@@ -4,11 +4,11 @@
 #include "mylib.h"
 #include "rbt.h"
 
-/* Macros for determining the colour of an rbt node. */
+/* Macros for determining the colour of an rbt node.*/
 #define IS_BLACK(x) ((NULL == (x)) || (BLACK == (x)->colour))
 #define IS_RED(x) ((NULL != (x)) && (RED == (x)->colour))
 
-/* Enum for the possible colour values of each rbt node. */
+/* Enum for the possible colour values of each rbt node.*/
 typedef enum { RED, BLACK } rbt_colour;
 
 /* Red Black Tree node struct.
@@ -116,34 +116,35 @@ rbt right_rotate(rbt r) {
     return r;
 }
 
-/* Performs rotations and recolourings required to
- * maintain the black-height properties of a
- * specified red-black tree.
+/* Performs rotations and recolourings to maintain RBT properties of a tree.
+ * Ensures that all paths from the root have the same number of black nodes.
+ * Ensures that no red node has red children.
+ * Does not ensure that the root is black.
  * @param r Red-black tree to fix
  */
 rbt rbt_fix(rbt r) {
-    if (r->left != NULL && IS_RED(r->left)) {/*Has a red left child*/
-        if (IS_RED(r->left->left)) {/*left left is red*/
-            if (IS_RED(r->right)) {/*right is black*/
-                /*make R red, make R's children black*/
+    if (r->left != NULL && IS_RED(r->left)) {/* Has a red left child.*/
+        if (IS_RED(r->left->left)) {/* Left left is red.*/
+            if (IS_RED(r->right)) {/* Right is black.*/
+                /* Make R red, make R's children black.*/
                 r->colour = RED;
                 r->left->colour = BLACK;
                 r->right->colour = BLACK;
-            } else {
-                /*right rotate R, make new root black, make R red*/
+            } else {/* Right is red.*/
+                /* Right rotate R, make new root black, make R red.*/
                 r = right_rotate(r);
                 r->colour = BLACK;
                 r->right->colour = RED;
             }
-        } else if (IS_RED(r->left->right)) {/*red left, left right red*/
+        } else if (IS_RED(r->left->right)) {/* Red left child, left's right child is red.*/
             if (IS_RED(r->right)) {
-                /*make R red, make R's children black*/
+                /* Make R red, make R's children black.*/
                 r->colour = RED;
                 r->left->colour = BLACK;
                 r->right->colour = BLACK;
-            } else {
-                /*left rotate left child of R, right rotate R
-                //make new root black, make R red*/
+            } else {/* Red left child, left's right child is black.*/
+                /* Left rotate left child of R, right rotate R.*/
+                /* Make new root black, make R red.*/
                 r->left = left_rotate(r->left);
                 r = right_rotate(r);
                 r->colour = BLACK;
@@ -151,16 +152,16 @@ rbt rbt_fix(rbt r) {
             }
         }
     }
-    if (r->right != NULL && IS_RED(r->right)) {/*right red and not null*/
-        if (IS_RED(r->right->left)) {/*right left red*/
+    if (r->right != NULL && IS_RED(r->right)) {/* Right child is red and not NULL.*/
+        if (IS_RED(r->right->left)) {/* Right child's left child is red.*/
             if (IS_RED(r->left)) {
-                /*make R red, make R's children black*/
+                /* Make R red, make R's children black.*/
                 r->colour = RED;
                 r->left->colour = BLACK;
                 r->right->colour = BLACK;
             } else {
-                /*right rotate right child of R, left rotate R
-                //make new root black, make R red*/
+                /* Right rotate right child of R, left rotate R.*/
+                /* Make new root black, make R red.*/
                 r->right = right_rotate(r->right);
                 r = left_rotate(r);
                 r->colour = BLACK;
@@ -168,12 +169,12 @@ rbt rbt_fix(rbt r) {
             }
         } else if (IS_RED(r->right->right)) {
             if (IS_RED(r->left)) {
-                /*make R red, make R's children black*/
+                /* Make R red, make R's children black.*/
                 r->colour = RED;
                 r->left->colour = BLACK;
                 r->right->colour = BLACK;
             } else {
-                /*left rotate R, make new root black, make R red*/
+                /* Left rotate R, make new root black, make R red.*/
                 r = left_rotate(r);
                 r->colour = BLACK;
                 r->left->colour = RED;
