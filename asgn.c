@@ -9,11 +9,11 @@
 #include "htable.h"
 #include "rbt.h"
 
-/* Default size for hash table*/
+/* Default size for hash table.*/
 #define DEFAULT_SIZE 3877
-/* Default container type for hash table*/
+/* Default container type for hash table.*/
 #define DEFAULT_TYPE FLEX_ARRAY
-
+/* Boolean for controlling print option*/
 enum print_option {PRINT, DONT_PRINT};
 
 /*
@@ -60,37 +60,36 @@ int main(int argc, char **argv) {
     htable h;
     char word[256];
     
-    /*Set default size and type for hashtable*/
+    /* Set default size and type for hashtable.*/
     int h_table_size = DEFAULT_SIZE;
     container_t container_type = DEFAULT_TYPE;
     
-    /* Set default no printing of hashtable and timing info*/
+    /* Set default to not print the hashtable and timing info.*/
     enum print_option print_hash_table = DONT_PRINT;
     enum print_option print_time_info = DONT_PRINT;
     
-    /*Variables for timing info*/
+    /* Variables for timing info.*/
     clock_t start_insert,finish_insert;
     clock_t start_search, finish_search;
     double  insert_time, search_time;
     int unknown_word_counter = 0;
 
-    /*Option handling variables*/
+    /* Option handling variables.*/
     const char *optstring = "rs:pih";
     char option;
 
-    /*Option handling*/
+    /* Option handling.*/
     while ((option = getopt(argc,argv,optstring))!=EOF){
         switch(option){
             case 'r':
-                /*use red-black tree as container*/
+                /* Use red-black tree as container.*/
                 /*printf("Option : %c\n",option);*/
                 container_type = RED_BLACK_TREE;
                 break;
             case 's' :
-                /*Change hash table size*/
+                /* Change hash table size.*/
                 /*printf("Option : %c\n",option);*/
                 h_table_size = atoi(optarg);
-                
                 if (h_table_size ==0){
                     fprintf(stderr,
                             "Error: Hash table size not set or set to 0\n");
@@ -99,23 +98,23 @@ int main(int argc, char **argv) {
                 /*printf("Htable size = %d\n", h_table_size);*/
                 break;
             case 'p' :
-                /*print to stdout*/
+                /* Print hash table contents to stdout.*/
                 /*printf("Option : %c\n",option);*/
                 print_hash_table = PRINT;
                 break;
             case 'i' :
-                /*print timing information*/
+                /* Print timing information.*/
                 /*printf("Option : %c\n",option);*/
                 print_time_info = PRINT;
                 break;
             case 'h':
-                /*print help message*/
+                /* Print help message.*/
                 /*printf("Option : %c\n",option);*/
                 print_help_message();
                 exit(EXIT_SUCCESS);
                 break;
             default:
-                /*print error then usage message*/
+                /*Print help message*/
                 /*printf("default\n");*/
                 print_help_message();
                 exit(EXIT_SUCCESS);
@@ -123,18 +122,18 @@ int main(int argc, char **argv) {
         }
     }
              
-    /*optind should now point to index of non-option argument in argv*/
-    /*Open file and check if it can be opened*/
+    /* optind should now point to index of non-option argument in argv.*/
+    /* Open file and check if it can be opened.*/
     if (argv[optind] != NULL){
         if (NULL ==(infile = fopen(argv[optind],"r"))){
             fprintf(stderr,"%s: can't find file %s\n", argv[0],argv[optind]);
             return EXIT_FAILURE;
         }
 	  
-        /*Make the new hash table*/
+        /* Make the new hash table.*/
         h = htable_new(h_table_size,container_type);
     
-        /*Fill hash table up with words from file*/
+        /* Fill hash table up with words from file.*/
         start_insert = clock();
         while (getword(word, sizeof word, infile)!= EOF){
             htable_insert(h,word);
@@ -144,8 +143,8 @@ int main(int argc, char **argv) {
         if (print_hash_table == PRINT){
             htable_print(h,stdout);
         }else{
-            /* Take words in from stdin*/
-            /* Search for input words in the hashtable*/
+            /* Take words in from stdin.*/
+            /* Search for input words in the hashtable.*/
             start_search = clock();
             while ((getword(word,sizeof word, stdin)!=EOF)){
                 if (htable_search(h,word)==0){
