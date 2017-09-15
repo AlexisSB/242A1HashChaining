@@ -13,9 +13,9 @@ by the second group of words.The default chaining uses a linked list.
 Options
 
 -r
-This tells the hash table to use red-black binary search trees(rbt) for chaining.
-A rbt offers improvements in search speed when many values are chained in the
-same container.
+This tells the hash table to use red-black binary search trees(rbt)
+for chaining. A rbt offers improvements in search speed when many
+values are chained in the same container.
 
 -s table-size
 Changes the size of the hash table to the specified size. Default size is 3877.
