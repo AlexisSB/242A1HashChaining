@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
         fclose(infile);
         return EXIT_SUCCESS;
     }else{
-        fprintf(stderr, "Error: Please include name of file in arguments\n");
+        fprintf(stderr, "Error: Please include file name as an argument.\n");
         return EXIT_FAILURE;
     }
   
