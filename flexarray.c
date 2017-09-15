@@ -16,7 +16,7 @@ struct flexarrayrec {
     char **items;
 };
 
-/* Creates a new (empty) flexarray.
+/* Creates a new empty flexarray.
  * Allocates enough memory for a new flexarray and the array of strings.
  * @return the newly created empty flexarray 
  */
