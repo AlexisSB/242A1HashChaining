@@ -28,6 +28,7 @@ container container_new(container_t container_type) {
     } else {
         new_container->contents = flexarray_new();
     }
+  
     return new_container;
 }
 
@@ -42,6 +43,7 @@ void container_free(container c) {
             flexarray_free(c->contents);
         }
     }
+  
     free(c);
 }
 
@@ -71,7 +73,7 @@ int container_search(container c, char* str) {
 }
 
 /* Prints all items in the container.
- * @param c: the container which is to be printed 
+ * @param c - the container which is to be printed 
  */
 void container_print(container c) {
     if (c->type == RED_BLACK_TREE) {
