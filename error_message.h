@@ -1,9 +1,9 @@
 Overview
 
-Asgn processes two groups of words. The first compulsory argument should specify
-a file to read in the first group of words. The second group of words is read
-from stdin. If a word that is read in from stdin is not in the first group of
-words, then the word will be printed to stdout.
+Asgn processes two groups of words. The first compulsory argument should
+specify a file to read in the first group of words. The second group of
+words is read from stdin. If a word that is read in from stdin is not in
+the first group of words, then the word will be printed to stdout.
 For example:
     ./asgn dictionary.txt < document.txt
 should print out words in document.txt that do not occur in the dictionary.
