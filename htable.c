@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "mylib.h"
 #include "htable.h"
 #include "container.h"
@@ -63,6 +64,7 @@ void htable_free(htable h){
 }
 
 /* Converts string to an int for generating hash value.
+ * Taken from COSC242 Lab manual page 77.
  * @param word - the string to be turned into an int
  * @return the resulting int value.
  */
