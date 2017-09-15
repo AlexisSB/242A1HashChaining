@@ -41,7 +41,7 @@ void print_help_message(){
 
 /*
  * Main program takes in two groups of words.
- * The first group is taken from a file given as an arguement.
+ * The first group is taken from a file given as an argument.
  * The words from the first group are inserted into a hashtable.
  * The hash table can use either a dynamic flexarray or a red black tree
  * to store words.
@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
         fclose(infile);
         return EXIT_SUCCESS;
     }else{
-        fprintf(stderr, "Error: Please include name of file in arguements\n");
+        fprintf(stderr, "Error: Please include name of file in arguments\n");
         return EXIT_FAILURE;
     }
   
