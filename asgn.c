@@ -25,8 +25,8 @@ void print_help_message(){
     FILE *helpfile;
     char input[255];
     char *status;
-    
-    helpfile = fopen("error_message.txt","r");
+        
+    helpfile = fopen("error_message.h","r");
     
     if(helpfile ==NULL){
         fprintf(stderr, " Can't find help file\n");
