@@ -158,11 +158,11 @@ int main(int argc, char **argv) {
             if (print_time_info == PRINT){ /*Print insert timing*/
                 insert_time =
 		  (double)(finish_insert-start_insert)/CLOCKS_PER_SEC;
-                fprintf(stderr, "Fill time:\t%.6f\n", insert_time);
+                fprintf(stderr, "Fill time   : %.6f\n", insert_time);
                 search_time =
 		  (double)(finish_search-start_search)/CLOCKS_PER_SEC;
-                fprintf(stderr, "Search time:\t%.6f\n", search_time);
-                fprintf(stderr, "Unknown words:\t%d\n", unknown_word_counter);
+                fprintf(stderr, "Search time   : %.6f\n", search_time);
+                fprintf(stderr, "Unknown words = %d\n", unknown_word_counter);
             }
         }
 	  
