@@ -136,7 +136,8 @@ rbt rbt_fix(rbt r) {
                 r->colour = BLACK;
                 r->right->colour = RED;
             }
-        } else if (IS_RED(r->left->right)) {/* Red left child, left's right child is red.*/
+        } else if (IS_RED(r->left->right)) {
+            /* Red left child, left's right child is red.*/
             if (IS_RED(r->right)) {
                 /* Make R red, make R's children black.*/
                 r->colour = RED;
@@ -152,7 +153,8 @@ rbt rbt_fix(rbt r) {
             }
         }
     }
-    if (r->right != NULL && IS_RED(r->right)) {/* Right child is red and not NULL.*/
+    if (r->right != NULL && IS_RED(r->right)) {
+        /* Right child is red and not NULL.*/
         if (IS_RED(r->right->left)) {/* Right child's left child is red.*/
             if (IS_RED(r->left)) {
                 /* Make R red, make R's children black.*/
