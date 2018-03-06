@@ -10,5 +10,9 @@ script:
  - diff mary_output1.txt testoutput1.txt
  - ./asgn mary.txt -p -s 7 -r > testoutput2.txt
  - diff mary_output2.txt testoutput2.txt
- 
+ - gcov asgn.c
+
+
+after_success:
+ - bash <(curl -s https://codecov.io/bash)
 
